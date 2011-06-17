@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name         = "devise_invitable"
   s.version      = DeviseInvitable::VERSION
   s.platform     = Gem::Platform::RUBY
-  s.authors      = ["Sergio Cambra"]
+  s.authors      = ["Sergio Cambra", "Jules Copeland"]
   s.email        = ["sergio@entrecables.com"]
-  s.homepage     = "https://github.com/scambra/devise_invitable"
+  s.homepage     = "https://github.com/julescopeland/devise_invitable"
   s.summary      = "An invitation strategy for Devise"
-  s.description  = "It adds support for send invitations by email (it requires to be authenticated) and accept the invitation by setting a password."
+  s.description  = "It adds support for sending invitations by email and accepting the invitation by setting a password, and adding personal messages to the emails"
   s.files        = Dir["{app,config,lib}/**/*"] + %w[LICENSE README.rdoc]
   s.require_path = "lib"
   s.rdoc_options = ["--main", "README.rdoc", "--charset=UTF-8"]
