@@ -47,8 +47,8 @@ module Devise
         if new_record? || invited?
           self.skip_confirmation! if self.new_record? and self.respond_to? :skip_confirmation!
           generate_invitation_token
-          save(false)
           send_invitation
+          save(false)
         end
       end
 
@@ -99,7 +99,7 @@ module Devise
         def send_invitation(attributes={})
           
           invitable = find_or_initialize_by_email(attributes[:email])
-          # invitable.attributes = attributes
+          invitable.attributes = attributes
 
           if invitable.new_record?
             invitable.errors.add(:email, :blank) if invitable.email.blank?
