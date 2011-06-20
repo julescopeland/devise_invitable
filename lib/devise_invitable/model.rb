@@ -99,7 +99,7 @@ module Devise
         def send_invitation(attributes={})
           
           invitable = find_or_initialize_by_email(attributes[:email])
-          invitable.attributes = attributes
+          # invitable.attributes = attributes
 
           if invitable.new_record?
             invitable.errors.add(:email, :blank) if invitable.email.blank?
