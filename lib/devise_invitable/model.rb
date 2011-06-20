@@ -98,7 +98,7 @@ module Devise
         # Options must contain the user email
         def send_invitation(attributes={})
           invitable = find_or_initialize_by_email(attributes[:email])
-          invitable.update_attributes(:invited_by_id => attributes[:invited_by_id], :invited_by_type => attributes[:invited_by_type])
+          invitable.update_attributes!(:invited_by_id => attributes[:invited_by_id], :invited_by_type => attributes[:invited_by_type])
 
           if invitable.new_record?
             invitable.errors.add(:email, :blank) if invitable.email.blank?
