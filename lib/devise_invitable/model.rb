@@ -38,17 +38,18 @@ module Devise
       end
 
       # Send invitation by email
-      def send_invitation
+      def send_invitation(attributes)
+        self.attributes = attributes
         ::DeviseMailer.deliver_invitation(self)
       end
 
       # Reset invitation token and send invitation again
-      def resend_invitation!
+      def resend_invitation!(attributes)
         if new_record? || invited?
           self.skip_confirmation! if self.new_record? and self.respond_to? :skip_confirmation!
           generate_invitation_token
-          send_invitation
           save(false)
+          send_invitation(attributes)
         end
       end
 
@@ -99,7 +100,6 @@ module Devise
         def send_invitation(attributes={})
           
           invitable = find_or_initialize_by_email(attributes[:email])
-          invitable.attributes = attributes
 
           if invitable.new_record?
             invitable.errors.add(:email, :blank) if invitable.email.blank?
@@ -108,7 +108,7 @@ module Devise
             invitable.errors.add(:email, :taken) unless invitable.invited?
           end
 
-          invitable.resend_invitation! if invitable.errors.empty?
+          invitable.resend_invitation!(attributes) if invitable.errors.empty?
           invitable
         end
 
