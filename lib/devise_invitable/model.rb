@@ -110,7 +110,7 @@ module Devise
           invitable = find_or_initialize_by_email(attributes[:email])
           logger.debug "== Running your invitable = find_or_initialize_by_email(attributes[:email])\n#{invitable.inspect} =="
           attributes.each do |k,v|
-            invitable.send("#{k}=", v)
+            invitable.send("#{k.to_sym}=", v)
           end
           logger.debug "== Just run the attrs loop to update the ones not in the db\n #{invitable.inspect} =="
 
