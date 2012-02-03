@@ -105,12 +105,16 @@ module Devise
         # Options must contain the user email
         def send_invitation(attributes={})
           logger.debug "================================================================="
-          logger.debug "== Running your send_invitation(attributes={})\n#{attributes} =="
+          logger.debug "== Running send_invitation(attributes={})\n#{attributes} =="
           logger.debug "================================================================="
           invitable = find_or_initialize_by_email(attributes[:email])
-          logger.debug "== Running your invitable = find_or_initialize_by_email(attributes[:email])\n#{invitable.inspect} =="
+          logger.debug "== Running: invitable = find_or_initialize_by_email(attributes[:email])\n#{invitable.inspect} =="
+          logger.debug "== Just as a basic insanity check, attributes.class = #{attributes.class} =="
           attributes.each do |k,v|
+            logger.debug "== in the loop now. key = #{k}, value = #{v} =="
             invitable.send("#{k.to_sym}=", v)
+            logger.debug "== just run invitable.send('#{k.to_sym}=', v) =="
+            logger.debug "== so invitable.#{k} should equal #{v}, it actually equals: #{invitable.send(k.to_sym)} =="
           end
           logger.debug "== Just run the attrs loop to update the ones not in the db\n #{invitable.inspect} =="
 
