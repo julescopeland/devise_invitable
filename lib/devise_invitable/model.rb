@@ -98,6 +98,9 @@ module Devise
         # email already exists error.
         # Options must contain the user email
         def send_invitation(attributes={})
+          logger.debug "================================================================="
+          logger.debug "== Running your code! if you can see this, your code is wrong! =="
+          logger.debug "================================================================="
           invitable = find_or_initialize_by_email(attributes[:email])
           
           attributes.each do |k,v|
