@@ -98,7 +98,7 @@ module Devise
         # email already exists error.
         # Options must contain the user email
         def send_invitation(attributes={})
-          
+          attributes = HashWithIndifferentAccess.new(attributes)
           invitable = find_or_initialize_by_email(attributes[:email])
 
           if invitable.new_record?
