@@ -45,10 +45,16 @@ module Devise
 
       # Reset invitation token and send invitation again
       def resend_invitation!(attributes)
+        logger.debug "== Now we're in the resend_invitation!(attributes) method attrs are:\n#{attributes} =="
+        logger.debug "== current value of self:\n#{self.inspect} =="
         if new_record? || invited?
+          logger.debug "== the invitation is either a new_record or the user is invited =="
           self.skip_confirmation! if self.new_record? and self.respond_to? :skip_confirmation!
+          logger.debug "== about to generate the invitation token  =="
           generate_invitation_token
+          logger.debug "== generated the invitation token ok, about to save(false)  =="
           save(false)
+          logger.debug "== saved the record... about to try sending the invite  =="
           send_invitation(attributes)
         end
       end
@@ -99,22 +105,26 @@ module Devise
         # Options must contain the user email
         def send_invitation(attributes={})
           logger.debug "================================================================="
-          logger.debug "== Running your code! if you can see this, your code is wrong! =="
+          logger.debug "== Running your send_invitation(attributes={})\n#{attributes} =="
           logger.debug "================================================================="
           invitable = find_or_initialize_by_email(attributes[:email])
-          
+          logger.debug "== Running your invitable = find_or_initialize_by_email(attributes[:email])\n#{invitable.inspect} =="
           attributes.each do |k,v|
             invitable.send("#{k}=", v)
           end
+          logger.debug "== Just run the attrs loop to update the ones not in the db\n #{invitable.inspect} =="
 
           if invitable.new_record?
+            logger.debug "== invitable is a new record =="
             invitable.errors.add(:email, :blank) if invitable.email.blank?
             invitable.errors.add(:email, :invalid) unless invitable.email.match Devise::EMAIL_REGEX
           else
+            logger.debug "== invitable is not a new record =="
             invitable.errors.add(:email, :taken) unless invitable.invited?
           end
-
+          logger.debug "== about to run invitable.resend_invitation!(attributes) if invitable.errors.empty? =="
           invitable.resend_invitation!(attributes) if invitable.errors.empty?
+          logger.debug "== made it past the resend_invitation method, returning this:\n#{invitable.inspect} =="
           invitable
         end
 
