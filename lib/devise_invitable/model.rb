@@ -116,7 +116,7 @@ module Devise
             logger.debug "== just run invitable.send('#{k.to_sym}=', v) =="
             logger.debug "== so invitable.#{k} should equal #{v}, it actually equals: #{invitable.send(k.to_sym)} =="
           end
-          logger.debug "== Just run the attrs loop to update the ones not in the db\n #{invitable.inspect} =="
+          logger.debug "== Just run the attrs loop to update the ones not in the db. Invite text should be:\n #{invitable.invite_text} ==\n\n\n"
 
           if invitable.new_record?
             logger.debug "== invitable is a new record =="
