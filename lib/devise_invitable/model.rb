@@ -127,6 +127,7 @@ module Devise
             invitable.errors.add(:email, :taken) unless invitable.invited?
           end
           logger.debug "== about to run invitable.resend_invitation!(attributes) if invitable.errors.empty? =="
+          logger.debug "== does invitable have any errors? :#{invitable.errors.inspect} =="
           invitable.resend_invitation!(attributes) if invitable.errors.empty?
           logger.debug "== made it past the resend_invitation method, returning this:\n#{invitable.inspect} =="
           invitable
