@@ -124,7 +124,7 @@ module Devise
             invitable.errors.add(:email, :invalid) unless invitable.email.match Devise::EMAIL_REGEX
           else
             logger.debug "== invitable is not a new record =="
-            invitable.errors.add(:email, :taken) unless invitable.invited?
+            invitable.errors.add(:email, "has already been invited") unless invitable.invited?
           end
           logger.debug "== about to run invitable.resend_invitation!(attributes) if invitable.errors.empty? =="
           logger.debug "== does invitable have any errors? :#{invitable.errors.inspect} =="
