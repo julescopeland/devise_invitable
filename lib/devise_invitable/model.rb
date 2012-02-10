@@ -108,15 +108,13 @@ module Devise
           logger.debug "== Running send_invitation(attributes={})\n#{attributes} =="
           logger.debug "================================================================="
           invitable = find_or_initialize_by_email(attributes[:email])
-          logger.debug "== Running: invitable = find_or_initialize_by_email(attributes[:email])\n#{invitable.inspect} =="
-          logger.debug "== Just as a basic insanity check, attributes.class = #{attributes.class} =="
           attributes.each do |k,v|
             logger.debug "== in the loop now. key = #{k}, value = #{v} =="
             invitable.send("#{k.to_sym}=", v)
             logger.debug "== just run invitable.send('#{k.to_sym}=', v) =="
-            logger.debug "== so invitable.#{k} should equal #{v}, it actually equals: #{invitable.send(k.to_sym)} =="
+            logger.debug "== so invitable.#{k} should equal #{v}, it actually equals: #{invitable.send(k.to_sym)} ==\n"
           end
-          logger.debug "== Just run the attrs loop to update the ones not in the db. Invite text should be:\n #{invitable.invite_text} ==\n\n\n"
+          logger.debug "== Just run the attrs loop to update the ones not in the db. Invite text should be:\n #{invitable.invite_text} ==\n\n"
 
           if invitable.new_record?
             logger.debug "== invitable is a new record =="
@@ -124,7 +122,10 @@ module Devise
             invitable.errors.add(:email, :invalid) unless invitable.email.match Devise::EMAIL_REGEX
           else
             logger.debug "== invitable is not a new record =="
+            logger.debug "== invitable.invite_text is: #{invitable.invite_text} =="
+            logger.debug "== about to add errors if necessary ==\n"
             invitable.errors.add(:email, "has already been invited") unless invitable.invited?
+            logger.debug "== invitable.invite_text is: #{invitable.invite_text} =="
           end
           logger.debug "== about to run invitable.resend_invitation!(attributes) if invitable.errors.empty? =="
           logger.debug "== does invitable have any errors? :#{invitable.errors.inspect} =="
