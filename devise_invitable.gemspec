@@ -113,12 +113,12 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<webrat>, [">= 0"])
-      s.add_dependency(%q<devise>, ["~> 1.0.6"])
+      s.add_dependency(%q<devise>, ["< 2.0.0"])
     end
   else
     s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<webrat>, [">= 0"])
-    s.add_dependency(%q<devise>, ["~> 1.0.6"])
+    s.add_dependency(%q<devise>, ["< 2.0.0"])
   end
 end
 
